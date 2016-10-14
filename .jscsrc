@@ -1,0 +1,6 @@
+{
+	"disallowMixedSpacesAndTabs": true,
+	"disallowMultipleSpaces": {"allowEOLComments": true},
+	"disallowTabs": false,
+	"validateIndentation" : { "value": "\t", "allExcept": ["comments", "emptyLines"] }
+}

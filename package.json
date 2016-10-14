@@ -1,0 +1,29 @@
+{
+  "name": "protobuf-stream",
+  "version": "0.1.0",
+  "description": "Streaming interface for protobuf",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gmobi-wush/protobuf-stream.git"
+  },
+  "author": "Wush Wu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gmobi-wush/protobuf-stream/issues"
+  },
+  "homepage": "https://github.com/gmobi-wush/protobuf-stream#readme",
+  "dependencies": {
+    "protocol-buffers": "^3.1.6"
+  },
+  "devDependencies": {
+    "async": "^2.1.1",
+    "event-stream": "^3.3.4",
+    "mocha": "^3.1.2",
+    "mocha-jscs": "^5.0.1",
+    "tempfile": "^1.1.1"
+  }
+}
