@@ -2,6 +2,16 @@ var protobuf = require('protocol-buffers');
 var stream = require('stream');
 
 const DELIMITER = "\n";
+const DELIMITER_BUFFER = new Buffer(DELIMITER);
+
+function createSerializer(schema) {
+	return function(chunk) {
+		var buf = schema.encode(chunk);
+		var lengthBuf = new Buffer(4);
+		lengthBuf.writeUInt32LE(buf.length, 0);
+		return Buffer.concat([lengthBuf, buf, DELIMITER_BUFFER]);
+	};
+}
 
 module.exports = {
 	delimiter : DELIMITER,
@@ -43,24 +53,22 @@ module.exports = {
 		}
 		return retval;
 	},
+	createSerializer : createSerializer,
 	createWriteStream : function(schema) {
+		var serialier = createSerializer(schema);
 		var retval = new stream.Transform({objectMode : true});
 		retval._transform = function(chunk, enc, callback) {
 			if (!chunk) {
-				retval.push(chuck);
+				retval.push(null);
 				return callback();
 			}
 			try {
-				var buf = schema.encode(chunk);
-				var lengthBuf = new Buffer(4);
-				lengthBuf.writeUInt32LE(buf.length, 0);
+				var buf = serialier(chunk);
 			} catch (ex) {
 				retval.emit("error", ex);
 				return callback(ex);
 			}
-			retval.push(lengthBuf);
 			retval.push(buf);
-			retval.push(DELIMITER);
 			return callback();
 		};
 		return retval;
